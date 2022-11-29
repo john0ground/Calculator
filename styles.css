@@ -27,8 +27,14 @@
     margin: 5px;
 }
 
-.display p {
+#output {
     position: absolute;
     right: 10px;
     bottom: 5px;
+}
+
+#prior-number {
+    position: absolute;
+    right: 10px;
+    top: 10px;
 }
