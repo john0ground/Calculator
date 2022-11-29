@@ -1,0 +1,34 @@
+* {
+    box-sizing: border-box;
+}
+
+.calculator {
+    width: 20rem;
+    height: 30rem;
+    border: 2px solid black;
+    margin: auto;
+    margin-top: 10vh;
+    background: #848777;
+    padding-left: 4px;
+}
+
+.display {
+    width: 95%;
+    height: 25%;
+    border: 1px solid black;
+    margin: 10px auto;
+    background: #ebf0da;
+    position: relative;
+}
+
+.btn {
+    width: 4rem;
+    height: 4rem;
+    margin: 5px;
+}
+
+.display p {
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+}
