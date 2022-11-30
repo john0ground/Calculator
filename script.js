@@ -6,7 +6,7 @@ const multiply = (a, b) => a * b;
 
 const divide = (a, b) => a / b;
 
-let operator = 'divide';
+let operator = '';
 
 function sign() {
     switch (operator) {
@@ -48,18 +48,33 @@ let current = 0;
 const operatorKey = document.querySelectorAll('.operatorKey');
 operatorKey.forEach(btn => btn.addEventListener('click', launchOperator));
 
-const priorNumber = document.getElementById('prior-number');
+const priorNumberDisplay = document.getElementById('prior-number');
 
 function launchOperator(e) {
-    primary = digits() * 1;
-    operator = `${e.target.id}`;
-    priorNumber.textContent = primary + '  ' + sign();
-    array = [];
+    const str = priorNumberDisplay.textContent;
+    if(str.includes('+') || str.includes('-') || str.includes('x') || str.includes('/')) {
+        current = digits() * 1;
+        output.textContent = operate(primary, current);
+        primary = operate(primary, current);
+
+        operator = `${e.target.id}`;
+        priorNumberDisplay.textContent = primary + '  ' + '  ' + sign();
+
+        array = [];
+    }
+    else {
+        operator = `${e.target.id}`;
+        primary = digits() * 1;
+        priorNumberDisplay.textContent = primary + '  ' + sign();
+        array = [];
+    }
+    
 }
 
 const equals = document.getElementById('equals');
 equals.addEventListener('click', () => {
     current = digits() * 1;
+    priorNumberDisplay.textContent = primary + '  ' + sign() + '  ' + current + '  ' + '=';
     console.log(typeof(primary));
-    alert(operate(primary, current));
+    output.textContent = operate(primary, current);
 });
