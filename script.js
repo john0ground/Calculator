@@ -52,6 +52,7 @@ const priorNumberDisplay = document.getElementById('prior-number');
 
 function launchOperator(e) {
     const str = priorNumberDisplay.textContent;
+
     if(str.includes('+') || str.includes('-') || str.includes('x') || str.includes('/')) {
         current = digits() * 1;
         output.textContent = operate(primary, current);
@@ -68,13 +69,39 @@ function launchOperator(e) {
         priorNumberDisplay.textContent = primary + '  ' + sign();
         array = [];
     }
-    
 }
 
 const equals = document.getElementById('equals');
 equals.addEventListener('click', () => {
+
     current = digits() * 1;
+
+    if(primary === 0 && current === 0) return;
+
     priorNumberDisplay.textContent = primary + '  ' + sign() + '  ' + current + '  ' + '=';
     console.log(typeof(primary));
     output.textContent = operate(primary, current);
 });
+
+const clear = document.getElementById('clear');
+clear.addEventListener('click', wipeData);
+
+function wipeData() {
+    array = [];
+    primary = 0;
+    current = 0;
+
+    output.textContent = null;
+    priorNumberDisplay.textContent = null;
+}
+
+const backSpace = document.getElementById('delete');
+backSpace.addEventListener('click', removeLastValue);
+
+function removeLastValue() {
+    if (priorNumberDisplay.textContent.includes('=')) return;
+
+    array = Array.from(output.textContent);
+    array.pop();
+    output.textContent = array.join('');
+}
