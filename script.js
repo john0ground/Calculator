@@ -38,7 +38,14 @@ let array = [];
 const digits = () => array.join('');
 
 function displayNum(e) {
-    array.push(`${e.target.id}`)
+    if(event.type === 'click') {
+        array.push(`${e.target.id}`)
+    }
+    if(event.type === 'keydown') {
+        const keyboardNumber = document.querySelector(`button[data-key="${e.keyCode}"]`);
+        array.push(keyboardNumber.id);
+    }
+
     output.textContent = digits();
 }
 
@@ -53,7 +60,7 @@ const priorNumberDisplay = document.getElementById('prior-number');
 function launchOperator(e) {
     const str = priorNumberDisplay.textContent;
 
-    if(str.includes('+') || str.includes('-') || str.includes('x') || str.includes('/')) {
+    if(str.includes('+') || str.includes('-') || str.includes('x') || str.includes('/') || str.includes('=')) {
         current = digits() * 1;
         output.textContent = operate(primary, current);
         primary = operate(primary, current);
@@ -79,9 +86,19 @@ equals.addEventListener('click', () => {
     if(primary === 0 && current === 0) return;
 
     priorNumberDisplay.textContent = primary + '  ' + sign() + '  ' + current + '  ' + '=';
-    console.log(typeof(primary));
+    
     output.textContent = operate(primary, current);
+
+    primary = operate(primary, current);
+    array = [];
 });
+
+const decimal = document.getElementById('.');
+decimal.addEventListener('click', () => {
+    if (array.includes('.')) return;
+    array.push('.')
+    output.textContent = digits();
+})
 
 const clear = document.getElementById('clear');
 clear.addEventListener('click', wipeData);
@@ -105,3 +122,20 @@ function removeLastValue() {
     array.pop();
     output.textContent = array.join('');
 }
+
+const btn = document.querySelectorAll('.btn');
+btn.forEach(btn => btn.addEventListener('click', clickSound));
+
+function clickSound() {
+    const calcAudio = document.querySelector('audio');
+    calcAudio.currentTime = 0;
+    calcAudio.play();
+}
+
+window.addEventListener('keydown', function(e) {
+    clickSound();
+    displayNum(e);
+    // const keyboardNumber = document.querySelector(`button[data-key="${e.keyCode}"]`);
+})
+
+
