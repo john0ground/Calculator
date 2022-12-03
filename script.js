@@ -31,77 +31,79 @@ function operate(x, y) {
 }
 
 const output = document.getElementById('output');
-const numberKey = document.querySelectorAll('.numberKey');
-numberKey.forEach(btn => btn.addEventListener('click', displayNum));
 
 let array = [];
 const digits = () => array.join('');
 
-function displayNum(e) {
-    if(event.type === 'click') {
-        array.push(`${e.target.id}`)
-    }
-    if(event.type === 'keydown') {
-        const keyboardNumber = document.querySelector(`button[data-key="${e.keyCode}"]`);
-        array.push(keyboardNumber.id);
-    }
-
+function displayNum() {
+    console.log('displayNum');
+    array.push(getId);
     output.textContent = digits();
 }
 
 let primary = 0;
 let current = 0;
 
-const operatorKey = document.querySelectorAll('.operatorKey');
-operatorKey.forEach(btn => btn.addEventListener('click', launchOperator));
-
 const priorNumberDisplay = document.getElementById('prior-number');
 
-function launchOperator(e) {
+
+
+function launchOperator() {
     const str = priorNumberDisplay.textContent;
 
-    if(str.includes('+') || str.includes('-') || str.includes('x') || str.includes('/') || str.includes('=')) {
+    if (str.includes('=')) {
+        console.log('equals');
+
+        operator = getId;
+        priorNumberDisplay.textContent = output.textContent + '  ' + sign();
+        primary = output.textContent * 1;
+        array = [];
+    }
+
+    else if(str.includes('+') || str.includes('-') || str.includes('x') || str.includes('/')) {
+        console.log('operator');
+
         current = digits() * 1;
         output.textContent = operate(primary, current);
         primary = operate(primary, current);
 
-        operator = `${e.target.id}`;
+        operator = getId;
         priorNumberDisplay.textContent = primary + '  ' + '  ' + sign();
 
         array = [];
     }
+    
     else {
-        operator = `${e.target.id}`;
+        console.log('else');
+       
+        operator = getId;
         primary = digits() * 1;
         priorNumberDisplay.textContent = primary + '  ' + sign();
         array = [];
     }
 }
 
-const equals = document.getElementById('equals');
-equals.addEventListener('click', () => {
+function total() {
 
     current = digits() * 1;
 
     if(primary === 0 && current === 0) return;
+    if (priorNumberDisplay.textContent.includes('=')) return;
 
     priorNumberDisplay.textContent = primary + '  ' + sign() + '  ' + current + '  ' + '=';
     
     output.textContent = operate(primary, current);
 
     primary = operate(primary, current);
-    array = [];
-});
 
-const decimal = document.getElementById('.');
-decimal.addEventListener('click', () => {
+    array = [];
+};
+
+function decimal() {
     if (array.includes('.')) return;
     array.push('.')
     output.textContent = digits();
-})
-
-const clear = document.getElementById('clear');
-clear.addEventListener('click', wipeData);
+}
 
 function wipeData() {
     array = [];
@@ -112,9 +114,6 @@ function wipeData() {
     priorNumberDisplay.textContent = null;
 }
 
-const backSpace = document.getElementById('delete');
-backSpace.addEventListener('click', removeLastValue);
-
 function removeLastValue() {
     if (priorNumberDisplay.textContent.includes('=')) return;
 
@@ -123,19 +122,38 @@ function removeLastValue() {
     output.textContent = array.join('');
 }
 
-const btn = document.querySelectorAll('.btn');
-btn.forEach(btn => btn.addEventListener('click', clickSound));
-
 function clickSound() {
     const calcAudio = document.querySelector('audio');
     calcAudio.currentTime = 0;
     calcAudio.play();
 }
 
-window.addEventListener('keydown', function(e) {
-    clickSound();
-    displayNum(e);
-    // const keyboardNumber = document.querySelector(`button[data-key="${e.keyCode}"]`);
-})
+
+let elementObj = {};
+let getId = '';
+
+window.addEventListener('keydown', placeKey = (e) => {
+    elementObj = document.querySelector(`button[data-key="${e.keyCode}"]`);
+    getId = elementObj.id;
+
+    run();
+});
 
 
+const allBtn = document.querySelectorAll('.btn')
+
+allBtn.forEach(btn => btn.addEventListener('click', mouseClicked = (e) => {
+    elementObj = e.target;
+    getId = elementObj.id;
+
+    run();
+}));
+
+function run() {
+    if (elementObj.className === 'btn numberKey') {displayNum()}
+    if (elementObj.className === 'btn operatorKey') {launchOperator()}
+    if (elementObj.className === 'btn equals') {total()}
+    if (elementObj.className === 'btn decimal') {decimal()}
+    if (elementObj.className === 'btn clear') {wipeData()}
+    if (elementObj.className === 'btn delete') {removeLastValue()}
+}
