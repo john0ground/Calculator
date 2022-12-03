@@ -52,7 +52,6 @@ function launchOperator() {
     const str = priorNumberDisplay.textContent;
 
     if (str.includes('=')) {
-        console.log('equals');
 
         operator = getId;
         priorNumberDisplay.textContent = output.textContent + '  ' + sign();
@@ -61,7 +60,6 @@ function launchOperator() {
     }
 
     else if(str.includes('+') || str.includes('-') || str.includes('x') || str.includes('/')) {
-        console.log('operator');
 
         current = digits() * 1;
         output.textContent = operate(primary, current);
@@ -74,7 +72,6 @@ function launchOperator() {
     }
     
     else {
-        console.log('else');
        
         operator = getId;
         primary = digits() * 1;
