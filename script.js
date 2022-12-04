@@ -36,7 +36,6 @@ let array = [];
 const digits = () => array.join('');
 
 function displayNum() {
-    console.log('displayNum');
     array.push(getId);
     output.textContent = digits();
 }
@@ -50,9 +49,9 @@ const priorNumberDisplay = document.getElementById('prior-number');
 
 function launchOperator() {
     const str = priorNumberDisplay.textContent;
+    console.log(operator, current);
 
     if (str.includes('=')) {
-        console.log('equals');
 
         operator = getId;
         priorNumberDisplay.textContent = output.textContent + '  ' + sign();
@@ -61,8 +60,12 @@ function launchOperator() {
     }
 
     else if(str.includes('+') || str.includes('-') || str.includes('x') || str.includes('/')) {
-        console.log('operator');
 
+        if (current === 0 && priorNumberDisplay.textContent.includes('/')) {
+            wipeData();
+            return output.textContent = 'You can\'t divide by 0';
+        }
+        
         current = digits() * 1;
         output.textContent = operate(primary, current);
         primary = operate(primary, current);
@@ -74,7 +77,6 @@ function launchOperator() {
     }
     
     else {
-        console.log('else');
        
         operator = getId;
         primary = digits() * 1;
@@ -84,11 +86,15 @@ function launchOperator() {
 }
 
 function total() {
-
     current = digits() * 1;
 
-    if(primary === 0 && current === 0) return;
-    if (priorNumberDisplay.textContent.includes('=')) return;
+    if (priorNumberDisplay.textContent === '') return;
+    else if (current === 0 && priorNumberDisplay.textContent.includes('/')) {
+        wipeData();
+        return output.textContent = 'You can\'t divide by 0';
+    }
+    else if (primary === 0 && current === 0) return;
+    else if (priorNumberDisplay.textContent.includes('=')) return;
 
     priorNumberDisplay.textContent = primary + '  ' + sign() + '  ' + current + '  ' + '=';
     
