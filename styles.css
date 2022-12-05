@@ -4,37 +4,57 @@
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(to right, #ecedee, #d0e6ec);
+}
+
 .calculator {
     width: 18rem;
-    height: 33rem;
+    height: 34rem;
     margin: auto;
     margin-top: 10vh;
-    background: #374353;
-    padding: 10px;
-    padding-top: 30px;
+    background: #435060;
+    padding: 0 14px 0px 14px;
     border-radius: 30px;
+    border: 6px solid black;
+}
+
+.cam-bar {
+    height: 4%;
+    width: 70%;
+    background: black;
+    margin: 0 auto;
+    border-radius: 0 0 18rem 18rem;
 }
 
 .display {
     width: 95%;
     height: 25%;
-    border: 1px solid black;
     margin: 10px auto;
-    background: #ebf0da;
     position: relative;
+    color: white;
 }
 
 .keys {
-    /* margin: auto; */
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+    row-gap: 1rem;
     justify-items: center;
 }
 
 .btn {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 15px;
+    border: none;
+    background: #435060;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7), 
+                -3px -3px 5px rgba(215, 215, 215, 0.5);
 }
 
 .btn:nth-of-type(8) {
@@ -59,4 +79,10 @@
     position: absolute;
     right: 10px;
     top: 10px;
+}
+
+#audio {
+    width: 15px;
+    height: 15px;
+    background: green;
 }

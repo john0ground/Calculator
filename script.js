@@ -33,6 +33,7 @@ function operate(x, y) {
 const output = document.getElementById('output');
 const priorNumberDisplay = document.getElementById('prior-number');
 const allBtn = document.querySelectorAll('.btn')
+const audio = document.getElementById('audio');
 
 let array = [];
 const digits = () => array.join('');
@@ -141,11 +142,18 @@ function removeLastValue() {
     output.textContent = array.join('');
 }
 
+let sound = 'on';
 function clickSound() {
+    if(sound === 'off') return;
     const calcAudio = document.querySelector('audio');
     calcAudio.currentTime = 0;
     calcAudio.play();
 }
+
+audio.addEventListener('click', () => {
+    sound === 'on'? sound ='off': sound ='on';
+});
+
 
 
 window.addEventListener('keydown', placeKey = (e) => {
