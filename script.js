@@ -31,25 +31,39 @@ function operate(x, y) {
 }
 
 const output = document.getElementById('output');
+const priorNumberDisplay = document.getElementById('prior-number');
+const allBtn = document.querySelectorAll('.btn')
 
 let array = [];
 const digits = () => array.join('');
 
-function displayNum() {
-    array.push(getId);
-    output.textContent = digits();
-}
-
 let primary = 0;
 let current = 0;
 
-const priorNumberDisplay = document.getElementById('prior-number');
+let elementObj = {};
+let getId = '';
 
+function run() {
+    clickSound();
+    if (elementObj.className === 'btn numberKey') {displayNum()}
+    if (elementObj.className === 'btn operatorKey') {launchOperator()}
+    if (elementObj.className === 'btn equals') {total()}
+    if (elementObj.className === 'btn decimal') {decimal()}
+    if (elementObj.className === 'btn clear') {wipeData()}
+    if (elementObj.className === 'btn delete') {removeLastValue()}
+}
 
+function displayNum() {
+    array.push(getId);
+    if (array[0] === '0' && array[1] === '0') {
+        array = ['0'];
+    }
+
+    output.textContent = digits();
+}
 
 function launchOperator() {
     const str = priorNumberDisplay.textContent;
-    console.log(operator, current);
 
     if (str.includes('=')) {
 
@@ -77,7 +91,6 @@ function launchOperator() {
     }
     
     else {
-       
         operator = getId;
         primary = digits() * 1;
         priorNumberDisplay.textContent = primary + '  ' + sign();
@@ -135,18 +148,12 @@ function clickSound() {
 }
 
 
-let elementObj = {};
-let getId = '';
-
 window.addEventListener('keydown', placeKey = (e) => {
     elementObj = document.querySelector(`button[data-key="${e.keyCode}"]`);
     getId = elementObj.id;
 
     run();
 });
-
-
-const allBtn = document.querySelectorAll('.btn')
 
 allBtn.forEach(btn => btn.addEventListener('click', mouseClicked = (e) => {
     elementObj = e.target;
@@ -155,11 +162,5 @@ allBtn.forEach(btn => btn.addEventListener('click', mouseClicked = (e) => {
     run();
 }));
 
-function run() {
-    if (elementObj.className === 'btn numberKey') {displayNum()}
-    if (elementObj.className === 'btn operatorKey') {launchOperator()}
-    if (elementObj.className === 'btn equals') {total()}
-    if (elementObj.className === 'btn decimal') {decimal()}
-    if (elementObj.className === 'btn clear') {wipeData()}
-    if (elementObj.className === 'btn delete') {removeLastValue()}
-}
+
+
