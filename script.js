@@ -152,9 +152,25 @@ function clickSound() {
 
 audio.addEventListener('click', () => {
     sound === 'on'? sound ='off': sound ='on';
+    theme === 'light'? theme ='dark': theme ='light';
+    changeTheme();
 });
 
+let theme = 'light';
+function changeTheme() {
+    if(theme === 'dark') {
+        rootColorVar.setAttribute('style', '--key-color1: white; --key-color2: rgb(231, 152, 87);');
+        rootColorVar.setAttribute('style', '--prior-number: rgb(201, 196, 196); --output-number: white;');
+        rootColorVar.setAttribute('style', '--key-color-background: #435060;')
+    }
+    else {
+        rootColorVar.setAttribute('style', '--key-color1: black; --key-color2: rgb(216, 131, 61);');
+        rootColorVar.setAttribute('style', '--prior-number: rgb(92, 81, 81); --output-number: rgb(216, 131, 61);');
+        rootColorVar.setAttribute('style', '--key-color-background: rgba(238, 238, 238, 0.267);');
+    }
+}
 
+const rootColorVar = document.querySelector(':root');
 
 window.addEventListener('keydown', placeKey = (e) => {
     elementObj = document.querySelector(`button[data-key="${e.keyCode}"]`);

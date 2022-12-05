@@ -1,3 +1,19 @@
+/* :root {
+    --key-color1: white;
+    --key-color2: rgb(231, 152, 87);
+    --prior-number: rgb(201, 196, 196);
+    --output-number: white;
+    --key-color-background: #435060;
+} */
+
+:root {
+    --key-color1: black;
+    --key-color2: rgb(216, 131, 61);
+    --prior-number: rgb(92, 81, 81);
+    --output-number: rgb(216, 131, 61);
+    --key-color-background: rgba(238, 238, 238, 0.267);
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -9,7 +25,7 @@ html {
 }
 
 body {
-    background: linear-gradient(to right, #ecedee, #d0e6ec);
+    background: linear-gradient(to right, #ecedee, #b2d6e0);
 }
 
 .calculator {
@@ -17,10 +33,11 @@ body {
     height: 34rem;
     margin: auto;
     margin-top: 10vh;
-    background: #435060;
+    background: var(--key-color-background);
     padding: 0 14px 0px 14px;
     border-radius: 30px;
     border: 6px solid black;
+    /* box-shadow: 1px 1px 10px */
 }
 
 .cam-bar {
@@ -31,8 +48,26 @@ body {
     border-radius: 0 0 18rem 18rem;
 }
 
+.modes {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#audio {
+    width: 15px;
+    height: 15px;
+    background: var(--key-color2);
+}
+
+#theme {
+    width: 15px;
+    height: 15px;
+    background: var(--key-color2);
+}
+
 .display {
-    width: 95%;
+    width: 100%;
     height: 25%;
     margin: 10px auto;
     position: relative;
@@ -45,6 +80,7 @@ body {
     gap: 10px;
     row-gap: 1rem;
     justify-items: center;
+    align-items: center;
 }
 
 .btn {
@@ -52,15 +88,37 @@ body {
     height: 3.2rem;
     border-radius: 15px;
     border: none;
-    background: #435060;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7), 
-                -3px -3px 5px rgba(215, 215, 215, 0.5);
+    background: var(--key-color-background);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5), 
+                -2px -2px 5px rgba(215, 215, 215, 0.2);
+    color: var(--key-color1);
+    font-size: 1rem;
 }
 
 .btn:nth-of-type(8) {
     grid-column: 4 / 5;
     grid-row: 2 / 4;
     height: 100%;
+}
+
+.btn:nth-of-type(1),
+.btn:nth-of-type(2),
+.btn:nth-of-type(3),
+.btn:nth-of-type(4),
+.btn:nth-of-type(8),
+.btn:nth-of-type(15) {
+    color: var(--key-color2);
+    font-size: 1.3rem;
+}
+
+.btn:nth-of-type(16) {
+    color: var(--key-color2);
+}
+
+.btn:active {
+    transform: scale(0.96);
+    box-shadow: 1.5px 1.5px 5px rgba(0, 0, 0, 0.6), 
+                1.5px 1.5px 5px rgba(215, 215, 215, 0.1);
 }
 
 .btn:nth-of-type(15) {
@@ -71,18 +129,16 @@ body {
 
 #output {
     position: absolute;
-    right: 10px;
-    bottom: 5px;
+    right: 0px;
+    top: 2rem;
+    font-size: 1.8rem;
+    color: var(--output-number);
 }
 
 #prior-number {
     position: absolute;
     right: 10px;
-    top: 10px;
+    bottom: 2rem;
+    color: var(--prior-number);
 }
 
-#audio {
-    width: 15px;
-    height: 15px;
-    background: green;
-}
