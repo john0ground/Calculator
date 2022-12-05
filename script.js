@@ -92,10 +92,6 @@ function launchOperator() {
     }
     
     else {
-<<<<<<< HEAD
-=======
-       
->>>>>>> 829b0df687ff1df4e6ed655c9c2b6abaad748195
         operator = getId;
         primary = digits() * 1;
         priorNumberDisplay.textContent = primary + '  ' + sign();
