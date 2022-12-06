@@ -34,6 +34,8 @@ const output = document.getElementById('output');
 const priorNumberDisplay = document.getElementById('prior-number');
 const allBtn = document.querySelectorAll('.btn')
 const audio = document.getElementById('audio');
+const themeBtn = document.getElementById('theme');
+const root = document.querySelector(':root');
 
 let array = [];
 const digits = () => array.join('');
@@ -143,6 +145,7 @@ function removeLastValue() {
 }
 
 let sound = 'on';
+
 function clickSound() {
     if(sound === 'off') return;
     const calcAudio = document.querySelector('audio');
@@ -152,25 +155,31 @@ function clickSound() {
 
 audio.addEventListener('click', () => {
     sound === 'on'? sound ='off': sound ='on';
-    theme === 'light'? theme ='dark': theme ='light';
-    changeTheme();
+    const soundIcon = document.getElementById('soundIcon');
+
+    if(sound === 'off') {soundIcon.style.color = 'rgba(0, 0, 0, 0.54)'}
+    else {soundIcon.style.color = 'black'}
 });
 
-let theme = 'light';
+let theme = 'dark';
+
+themeBtn.addEventListener('click',() => {
+    theme === 'light'? theme ='dark': theme ='light';
+    changeTheme();
+
+    const themeIcon = document.getElementById('themeIcon');
+    if(theme === "light") {themeIcon.style.color = 'rgba(0, 0, 0, 0.54)'}
+    else {themeIcon.style.color = 'black'}
+});
+
 function changeTheme() {
     if(theme === 'dark') {
-        rootColorVar.setAttribute('style', '--key-color1: white; --key-color2: rgb(231, 152, 87);');
-        rootColorVar.setAttribute('style', '--prior-number: rgb(201, 196, 196); --output-number: white;');
-        rootColorVar.setAttribute('style', '--key-color-background: #435060;')
+        root.setAttribute('style', '--key-color1: white; --prior-number: rgb(201, 196, 196); --output-number: white; --key-color-background: #435060;');
     }
     else {
-        rootColorVar.setAttribute('style', '--key-color1: black; --key-color2: rgb(216, 131, 61);');
-        rootColorVar.setAttribute('style', '--prior-number: rgb(92, 81, 81); --output-number: rgb(216, 131, 61);');
-        rootColorVar.setAttribute('style', '--key-color-background: rgba(238, 238, 238, 0.267);');
+        root.setAttribute('style', '--key-color1: black; --prior-number: rgb(92, 81, 81); --output-number: rgb(216, 131, 61); --key-color-background: rgba(238, 238, 238, 0.267);');
     }
 }
-
-const rootColorVar = document.querySelector(':root');
 
 window.addEventListener('keydown', placeKey = (e) => {
     elementObj = document.querySelector(`button[data-key="${e.keyCode}"]`);
