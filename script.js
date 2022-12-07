@@ -37,6 +37,7 @@ const audio = document.getElementById('audio');
 const themeBtn = document.getElementById('theme');
 const root = document.querySelector(':root');
 
+// 41 be descriptive - calculationOutputArray
 let array = [];
 const digits = () => array.join('');
 
@@ -46,8 +47,10 @@ let current = 0;
 let elementObj = {};
 let getId = '';
 
+// 53 - 59 can use  "if (elementObj.classList.contains('numberKey')) {displayNum()} "
 function run() {
-    clickSound();
+    clickSound();    
+    
     if (elementObj.className === 'btn numberKey') {displayNum()}
     if (elementObj.className === 'btn operatorKey') {launchOperator()}
     if (elementObj.className === 'btn equals') {total()}
@@ -65,6 +68,8 @@ function displayNum() {
     output.textContent = digits();
 }
 
+
+// 76 use regex for str - /[+-\/\*]/ig.test('234+23')
 function launchOperator() {
     const str = priorNumberDisplay.textContent;
 
@@ -76,14 +81,15 @@ function launchOperator() {
         array = [];
     }
 
+// 91 "use parseInt to convert str to number"   current = parseInt(digits());
     else if(str.includes('+') || str.includes('-') || str.includes('x') || str.includes('/')) {
 
         if (current === 0 && priorNumberDisplay.textContent.includes('/')) {
             wipeData();
             return output.textContent = 'You can\'t divide by 0';
         }
-        
         current = digits() * 1;
+        
         output.textContent = operate(primary, current);
         primary = operate(primary, current);
 
@@ -172,6 +178,22 @@ themeBtn.addEventListener('click',() => {
     else {themeIcon.style.color = 'black'}
 });
 
+// 197 - Use toggle for changing themes
+
+// const calc = document.querySelector('.calculator');
+// function changeTheme() {
+//     calc.classList.toggle("light", theme === "light");
+// }
+
+// --------CSS---------
+// .calculator.light {
+//     --key-color1: black;
+//     --key-color2: rgb(216, 131, 61);
+//     --prior-number: rgb(92, 81, 81);
+//     --output-number: rgb(216, 131, 61);
+//     --key-color-background: rgba(238, 238, 238, 0.267);
+// }
+
 function changeTheme() {
     if(theme === 'dark') {
         root.setAttribute('style', '--key-color1: white; --prior-number: rgb(201, 196, 196); --output-number: white; --key-color-background: #435060;');
@@ -180,6 +202,8 @@ function changeTheme() {
         root.setAttribute('style', '--key-color1: black; --prior-number: rgb(92, 81, 81); --output-number: rgb(216, 131, 61); --key-color-background: rgba(238, 238, 238, 0.267);');
     }
 }
+
+
 
 window.addEventListener('keydown', placeKey = (e) => {
     elementObj = document.querySelector(`button[data-key="${e.keyCode}"]`);
